@@ -12,7 +12,7 @@ export default async function Home({
 
   const products = await getProducts({
     searchBy: params?.searchBy || undefined,
-    // category: searchParams?.category,
+    category: searchParams?.category,
     // page: 1,
     // limit: 10,
   });

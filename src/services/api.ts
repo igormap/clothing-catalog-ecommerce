@@ -1,3 +1,4 @@
+import { normalizeString } from "@/utils";
 import axios from "axios";
 
 export interface Product {
@@ -26,17 +27,19 @@ const filterProducts = (
   products: Product[],
   params?: ListProductParams
 ): Product[] => {
-  const normalizeString = (str: string) =>
-    str
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase();
-
   const searchBy = params?.searchBy ? normalizeString(params.searchBy) : "";
+  const category = params?.category ? normalizeString(params?.category) : ""; // Normaliza a categoria para comparação
 
-  return products.filter((product) =>
-    normalizeString(product.name).includes(searchBy)
-  );
+  return products.filter((product) => {
+    const matchesSearch = normalizeString(product.name).includes(searchBy);
+    const matchesCategory = category
+      ? normalizeString(product.category) === category
+      : true;
+
+    // console.log(matchesCategory && product);
+
+    return matchesSearch && matchesCategory; // Produto deve corresponder a ambos os filtros
+  });
 };
 
 export const getProducts = async (params?: ListProductParams) => {
