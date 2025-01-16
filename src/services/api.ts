@@ -11,11 +11,37 @@ export interface Product {
   description: string;
 }
 
+export interface ListProductParams {
+  searchBy?: string;
+  category?: string;
+  page?: number;
+  limit?: number;
+}
+
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL, // Use variáveis de ambiente para segurança.
 });
 
-export const getProducts = async () => {
+const filterProducts = (
+  products: Product[],
+  params?: ListProductParams
+): Product[] => {
+  const normalizeString = (str: string) =>
+    str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+
+  const searchBy = params?.searchBy ? normalizeString(params.searchBy) : "";
+
+  return products.filter((product) =>
+    normalizeString(product.name).includes(searchBy)
+  );
+};
+
+export const getProducts = async (params?: ListProductParams) => {
   const response: Product[] = (await api.get("/products")).data;
-  return response;
+
+  const filteredProducts = filterProducts(response, params);
+  return filteredProducts;
 };
