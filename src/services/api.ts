@@ -48,3 +48,9 @@ export const getProducts = async (params?: ListProductParams) => {
   const filteredProducts = filterProducts(response, params);
   return filteredProducts;
 };
+
+export const getProductById = async (id: string) => {
+  const response: Product[] = (await api.get(`/products`)).data;
+  const product = response.find((product) => product.id === id);
+  return product;
+};
