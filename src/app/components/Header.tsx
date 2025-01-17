@@ -10,7 +10,7 @@ export function Header() {
         <HeaderMenuItem href="/shop" label="Shop" />
       </HeaderMenu>
       <HeaderMenu>
-        <HeaderMenuItem href="/busca" label={<Search />} />
+        <HeaderMenuItem href="#filtro" label={<Search />} />
         <HeaderMenuItem href="/carrinho" label={<ShoppingCart />} />
       </HeaderMenu>
     </header>
@@ -33,8 +33,10 @@ function HeaderMenuItem({
   href: string;
 }) {
   return (
-    <Link href={href} className="cursor-pointer">
-      {label}
-    </Link>
+    <li>
+      <Link href={href} className="cursor-pointer">
+        {label}
+      </Link>
+    </li>
   );
 }
