@@ -2,6 +2,7 @@
 
 import { Product } from "@/services/api";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Props {
   product: Product;
@@ -9,11 +10,23 @@ interface Props {
 }
 
 export function ItemCard({ product, onAddToCart }: Props) {
+  const router = useRouter();
+
+  const handleNavigation = () => {
+    router.push("/produto/" + encodeURIComponent(product.id));
+  };
+
   return (
     <div className="w-72 h-[440px] flex flex-col bg-slate-200 relative group">
-      <div className="w-full h-full flex items-center justify-center absolute z-50 bg-gray-700 bg-opacity-75 invisible group-hover:visible">
+      <div className="w-full h-full flex flex-col gap-4 items-center justify-center absolute z-50 bg-gray-700 bg-opacity-75 invisible group-hover:visible">
         <button
           className="w-52 h-12 opacity-100 bg-opacity-100 bg-white text-amber-800"
+          onClick={handleNavigation}
+        >
+          Visualizar
+        </button>
+        <button
+          className="w-52 h-12 opacity-100 bg-opacity-100 bg-amber-800 text-white"
           onClick={() => onAddToCart(product)}
         >
           Adicionar ao carrinho
