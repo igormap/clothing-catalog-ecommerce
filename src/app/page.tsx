@@ -6,13 +6,13 @@ import { ProductsFilter } from "./components/ProductsFilter";
 export default async function Home({
   searchParams,
 }: {
-  searchParams?: { searchBy?: string; category?: string };
+  searchParams: { searchBy?: string; category?: string };
 }) {
-  const params = await searchParams;
+  const { searchBy, category } = await searchParams;
 
   const products = await getProducts({
-    searchBy: params?.searchBy || undefined,
-    category: searchParams?.category,
+    searchBy,
+    category,
     // page: 1,
     // limit: 10,
   });
