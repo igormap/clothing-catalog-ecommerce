@@ -4,6 +4,7 @@ import { useCartStore } from "@/providers/counter-store-provider";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import { UpdateCartProductQuantity } from "./UpdateCartProductQuantity";
+import { formatPrice } from "@/lib/utils";
 
 export function CartDetails() {
   const { products, updateQuantity, removeFromCart, totalValue, totalItems } =
@@ -20,7 +21,7 @@ export function CartDetails() {
   return (
     <div className="flex flex-col justify-center items-start  gap-4 w-screen px-6 lg:flex-row">
       <div className="flex flex-col w-full max-w-screen-md overflow-auto">
-        <div className="w-full h-14 bg-backgroundCart grid grid-cols-4 p-4 justify-start">
+        <div className="w-full h-14 bg-backgroundCart grid grid-cols-4 p-4 justify-start invisible md:visible">
           <span>Produto</span>
           <span>Preço</span>
           <span>Quantidade</span>
@@ -29,7 +30,7 @@ export function CartDetails() {
         {products.map(({ product, quantity }) => (
           <div
             key={"product-cart-" + product.id}
-            className="w-full flex justify-between items-start  flex-auto p-4 mt-6"
+            className="w-full flex flex-col gap-4 justify-between items-center  flex-auto p-4 mt-6 md:flex-row md:items-center md:justify-start"
           >
             <Image
               alt={product.name}
@@ -39,21 +40,25 @@ export function CartDetails() {
               objectFit="contain"
               className="rounded-lg h-[105px] w-[105px]"
             />
-            <span className="text-secondaryText">{product.name}</span>
-            <span className="text-secondaryText">
-              {product.promotional_price ?? product.price}
-            </span>
-            <UpdateCartProductQuantity
-              onMinus={() => updateQuantity(product, "decrement")}
-              onPlus={() => updateQuantity(product, "increment")}
-              quantity={quantity}
-            />
-            <span>
-              {quantity * (product.promotional_price ?? product.price)}
-            </span>
-            <button onClick={() => removeFromCart(product)}>
-              <Trash2 className="hover:text-red-500" />
-            </button>
+            <div className="flex gap-4 items-center flex-col sm:flex-row">
+              <span className="text-secondaryText">{product.name}</span>
+              <span className="text-secondaryText">
+                {formatPrice(product.promotional_price ?? product.price)}
+              </span>
+              <UpdateCartProductQuantity
+                onMinus={() => updateQuantity(product, "decrement")}
+                onPlus={() => updateQuantity(product, "increment")}
+                quantity={quantity}
+              />
+              <span>
+                {formatPrice(
+                  quantity * (product.promotional_price ?? product.price)
+                )}
+              </span>
+              <button onClick={() => removeFromCart(product)}>
+                <Trash2 className="hover:text-red-500" />
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -62,11 +67,11 @@ export function CartDetails() {
         <div className="flex flex-col gap-4">
           <div className="flex justify-between">
             <span>Subtotal</span>
-            <span>R$ {totalValue}</span>
+            <span>{formatPrice(totalValue)}</span>
           </div>
           <div className="flex justify-between">
             <span>Total</span>
-            <span>R$ {totalValue}</span>
+            <span>{formatPrice(totalValue)}</span>
           </div>
           <button className="border border-black rounded-xl p-3">
             Finalizar compra

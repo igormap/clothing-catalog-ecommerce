@@ -23,7 +23,10 @@ export function HeaderMenuItem({
   const { totalItems } = useCartStore((store) => store);
   return (
     <li>
-      <Link href={href} className="cursor-pointer relative">
+      <Link
+        href={href}
+        className="cursor-pointer relative hover:text-amber-800"
+      >
         {label}
       </Link>
       {totalItems > 0 && inCart && (

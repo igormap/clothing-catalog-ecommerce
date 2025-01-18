@@ -7,7 +7,7 @@ export default async function ProductPage({
 }: {
   params: { productId: string };
 }) {
-  const { productId } = params;
+  const { productId } = await params;
   const product = await getProductById(productId);
 
   if (!product) {
@@ -21,8 +21,8 @@ export default async function ProductPage({
   }
 
   return (
-    <div className="flex w-full gap-8 px-52 py-10">
-      <div className="w-1/2 h-[500px] relative rounded">
+    <div className="flex w-screen gap-8 px-5 flex-col pt-6 md:flex-row">
+      <div className="w-full h-[500px] relative rounded md:w-1/2">
         <Image
           objectFit="cover"
           alt={product?.name ?? "Produto"}
@@ -30,7 +30,7 @@ export default async function ProductPage({
           fill
         />
       </div>
-      <div className="w-1/2 flex flex-col items-start gap-8 h-[500px]">
+      <div className="w-full flex flex-col items-start gap-8 h-[500px] md:w-1/2">
         <div className="flex flex-col gap-2">
           <h1 className="font-medium text-4xl">{product?.name}</h1>
           <p className="text-2xl text-gray-500">R$ {product?.price}</p>

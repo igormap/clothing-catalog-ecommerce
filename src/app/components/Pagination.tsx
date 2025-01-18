@@ -2,7 +2,7 @@
 
 import * as P from "@/components/ui/pagination";
 import { ListProductParams } from "@/services/api";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 
 interface Props {

@@ -1,5 +1,6 @@
 "use client";
 
+import { formatPrice } from "@/lib/utils";
 import { Product } from "@/services/api";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -47,11 +48,11 @@ export function ItemCard({ product, onAddToCart }: Props) {
         <span className="text-base text-gray-500">{product.description}</span>
         <div className="flex gap-4 items-center">
           <span className="text-xl font-semibold text-gray-800">
-            R$ {product.promotional_price || product.price}
+            {formatPrice(product.promotional_price || product.price)}
           </span>
           {product.promotional_price && (
             <span className="text-sm text-gray-400 line-through">
-              R$ {product.price}
+              {formatPrice(product.price)}
             </span>
           )}
         </div>
