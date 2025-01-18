@@ -11,6 +11,8 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        backgroundCart: "#F9F1E7",
+        secondary: "#9F9F9F",
       },
     },
   },

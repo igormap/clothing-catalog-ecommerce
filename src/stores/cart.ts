@@ -120,7 +120,10 @@ export const createCartStore = (initState: CartState = defaultInitState) => {
           0
         );
         const totalValue = newProducts.reduce(
-          (sum, item) => sum + item.quantity * item.product.price,
+          (sum, item) =>
+            sum +
+            item.quantity *
+              (item.product.promotional_price ?? item.product.price),
           0
         );
 
