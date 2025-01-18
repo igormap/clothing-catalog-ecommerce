@@ -11,7 +11,7 @@ export function ButtonAddToCart({ product }: Props) {
   const { addToCart } = useCartStore((store) => store);
   return (
     <button
-      className="border border-black rounded-xl p-4"
+      className="border border-black rounded-xl p-4 hover:bg-backgroundCart transition-all "
       onClick={() => addToCart(product)}
     >
       Adicionar ao carrinho

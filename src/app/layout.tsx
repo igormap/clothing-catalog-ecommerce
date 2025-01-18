@@ -27,7 +27,7 @@ export default function RootLayout({
       <CounterStoreProvider>
         <body className={`${poppins.variable} antialiased`}>
           <Header />
-          {children}
+          <div className="flex-1">{children}</div>
           <Footer />
         </body>
       </CounterStoreProvider>
