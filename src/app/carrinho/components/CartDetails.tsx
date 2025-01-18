@@ -39,8 +39,8 @@ export function CartDetails() {
               objectFit="contain"
               className="rounded-lg h-[105px] w-[105px]"
             />
-            <span className="text-secondary">{product.name}</span>
-            <span className="text-secondary">
+            <span className="text-secondaryText">{product.name}</span>
+            <span className="text-secondaryText">
               {product.promotional_price ?? product.price}
             </span>
             <UpdateCartProductQuantity
