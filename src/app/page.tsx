@@ -18,7 +18,7 @@ export default async function Home({
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full pb-10">
       <HeroSection />
       <div className="w-full flex justify-center ">
         <ProductsFilter />
