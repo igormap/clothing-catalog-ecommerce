@@ -38,7 +38,10 @@ export function ProductsFilter() {
   }, [debounceSearch, router, updateSearchParams]);
 
   return (
-    <div className="w-full flex justify-center items-center gap-2 py-6 my-6">
+    <div
+      className="w-full flex flex-col items-center gap-2 md:flex-row md:justify-center"
+      id="filtro"
+    >
       <label htmlFor="searchBy" className="flex flex-col gap-2">
         Pesquisa
         <input

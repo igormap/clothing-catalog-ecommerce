@@ -16,7 +16,12 @@ export interface ListProductParams {
   searchBy?: string;
   category?: string;
   page?: number;
-  limit?: number;
+  pageSize?: number;
+}
+
+interface ProductResponse {
+  products: Product[];
+  total: number;
 }
 
 const api = axios.create({
@@ -26,27 +31,45 @@ const api = axios.create({
 const filterProducts = (
   products: Product[],
   params?: ListProductParams
-): Product[] => {
+): ProductResponse => {
   const searchBy = params?.searchBy ? normalizeString(params.searchBy) : "";
   const category = params?.category ? normalizeString(params?.category) : ""; // Normaliza a categoria para comparação
+  const page = params?.page || 1; // Página atual (1 por padrão)
+  const pageSize = params?.pageSize || 6; // Tamanho da página (10 por padrão)
 
-  return products.filter((product) => {
+  // Filtra os produtos
+  const filteredProducts = products.filter((product) => {
     const matchesSearch = normalizeString(product.name).includes(searchBy);
     const matchesCategory = category
       ? normalizeString(product.category) === category
       : true;
 
-    // console.log(matchesCategory && product);
-
     return matchesSearch && matchesCategory; // Produto deve corresponder a ambos os filtros
   });
+
+  // Aplica a paginação
+  const startIndex = (page - 1) * pageSize;
+  const paginatedProducts = filteredProducts.slice(
+    startIndex,
+    startIndex + pageSize
+  );
+
+  return {
+    products: paginatedProducts,
+    total: filteredProducts.length,
+  };
 };
 
-export const getProducts = async (params?: ListProductParams) => {
+export const getProducts = async (
+  params?: ListProductParams
+): Promise<ProductResponse> => {
   const response: Product[] = (await api.get("/products")).data;
 
   const filteredProducts = filterProducts(response, params);
-  return filteredProducts;
+  return {
+    products: filteredProducts.products,
+    total: filteredProducts.total,
+  };
 };
 
 export const getProductById = async (id: string) => {

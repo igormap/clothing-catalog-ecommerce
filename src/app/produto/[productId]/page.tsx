@@ -1,5 +1,6 @@
 import { getProductById } from "@/services/api";
 import Image from "next/image";
+import { ButtonAddToCart } from "../components/ButtonAddToCart";
 
 export default async function ProductPage({
   params,
@@ -35,9 +36,7 @@ export default async function ProductPage({
           <p className="text-2xl text-gray-500">R$ {product?.price}</p>
           <p className="text-sm">{product?.description}</p>
         </div>
-        <button className="border border-black rounded-xl p-4">
-          Adicionar ao carrinho
-        </button>
+        <ButtonAddToCart product={product} />
       </div>
     </div>
   );
