@@ -4,7 +4,7 @@
 import { type ReactNode, createContext, useRef, useContext } from "react";
 import { useStore } from "zustand";
 
-import { type CartStore, createCartStore, initCartStore } from "@/stores/cart";
+import { type CartStore, createCartStore } from "@/stores/cart";
 
 export type CartStoreApi = ReturnType<typeof createCartStore>;
 
@@ -21,7 +21,7 @@ export const CounterStoreProvider = ({
 }: CounterStoreProviderProps) => {
   const storeRef = useRef<CartStoreApi>(null);
   if (!storeRef.current) {
-    storeRef.current = createCartStore(initCartStore());
+    storeRef.current = createCartStore(); // Remove o initCartStore
   }
 
   return (
